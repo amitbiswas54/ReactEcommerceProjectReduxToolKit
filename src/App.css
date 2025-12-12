@@ -1,0 +1,10 @@
+@import "tailwindcss";
+body {
+   @apply bg-gray-100 
+         bg-gradient-to-br 
+         from-purple-50/50 
+         to-pink-50/50 
+         overflow-hidden 
+         w-full 
+         max-w-[100vw];
+}
