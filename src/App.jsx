@@ -1,30 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Header from './components/Header';
-import ProductCard from './components/ProductCard';
+import ProductCard from "./components/ProductCard";
+import CartList from "./components/CartList";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Layout from "./components/Layout";
 
 function App() {
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      Component: Layout,
+      children: [
+        {
+          index: true,
+          Component: ProductCard,
+        },
+        {
+          path: "cartlist",
+          Component: CartList,
+        },
+      ],
+    },
+  ],
+  {
+    basename: "/ReactEcommerceProjectReduxToolKit",
+  }
+);
 
 
   return (
-    <>      
-    <Header/>
-<h1 class="text-4xl 
-font-bold 
- from-pink-500
-  to-purple-500
-   bg-clip-text 
-   text-transparent
-    ">
-  Gradient Text Example
-</h1>
-<div className=" mt-10  mx-auto max-w-[75rem]">
-<ProductCard/>
-</div>
-     </>
-  )
+    <>
+     <RouterProvider router={router} /> 
+  
+    </>
+  );
 }
 
-export default App
+export default App;

@@ -1,5 +1,9 @@
 import React from 'react'
 import AddtoCart from './AddtoCart';
+import About from '../pages/About';
+import Contact from '../pages/Contact';
+
+import { Link } from 'react-router-dom';
 
 function Header() {
   return (
@@ -10,15 +14,14 @@ function Header() {
       </h1>
 
     
-   <nav className="hidden md:flex gap-6 text-white font-medium">
-        <a href="#" className="hover:text-purple-600">Home</a>
-        <a href="#" className="hover:text-purple-600">Products</a>
-        <a href="#" className="hover:text-purple-600">About</a>
-        <a href="#" className="hover:text-purple-600">Contact</a>
+      <nav className="hidden md:flex gap-6 text-white font-medium">
+        <Link to='/' className="hover:text-purple-600">Products</Link>
+        <Link to='/about' className="hover:text-purple-600">About</Link>
+        <Link to='/contact' className="hover:text-purple-600">Contact</Link>
       </nav>
 
       {/* Cart Icon */}
-      <AddtoCart />
+      <AddtoCart/>
       </header>
   )
 }
