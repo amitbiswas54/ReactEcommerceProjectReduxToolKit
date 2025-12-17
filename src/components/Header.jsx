@@ -7,14 +7,14 @@ import { Link } from 'react-router-dom';
 
 function Header() {
   return (
-    <header className=" bg-purple-500 shadow-md py-4 px-6 flex justify-between items-center w-full">
+    <header className=" bg-sky-600 shadow-md py-4 px-6 flex justify-between items-center w-full">
       {/* Logo */}
       <h1 className="text-2xl font-bold text-white ">
-        MyStore
+       <Link to='/' className=""> MyStore</Link>
       </h1>
 
     
-      <nav className="hidden md:flex gap-6 text-white font-medium">
+      <nav className="hidden md:flex gap-6 text-white font-medium text-xl uppercase">
         <Link to='/' className="hover:text-purple-600">Products</Link>
         <Link to='/about' className="hover:text-purple-600">About</Link>
         <Link to='/contact' className="hover:text-purple-600">Contact</Link>
