@@ -1,45 +1,47 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
-import { Search } from "lucide-react";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchProducts = createAsyncThunk(
-  'products',
-  async () => {     
+  "products/fetchProducts",
+  async () => {
     const response = await fetch("https://fakestoreapi.com/products");
-    const data = await response.json();
-    return data;
-  } 
-
+    return await response.json();
+  }
 );
-const ProductsSlice = createSlice({
-  name: "ProductsSlice",
-  initialState: {       
 
+const ProductsSlice = createSlice({
+  name: "products",
+  initialState: {
     items: [],
-    status: undefined,
-    error: null, 
-    //searchTerm: "",  ✅ search text   
+    filteredItems: [],   // 🔥 important
+    status: "idle",
+    error: null,
+    searchTerm: "",
+  },
+  reducers: {
+    setSearchTerm: (state, action) => {
+      state.searchTerm = action.payload;
+
+      state.filteredItems = state.items.filter((item) =>
+        item.title.toLowerCase().includes(action.payload.toLowerCase())
+      );
     },
-       
-    // reducers: {
-    //   setSearchTerm:(state, action) => {
-    //   state.searchTerm = action.payload;
-    // },
-    // },
-    extraReducers: (builder) => {
-      builder
-        .addCase(fetchProducts.pending,(state) => {    
-            state.status = 'loading';
-        })
-        .addCase(fetchProducts.fulfilled,(state, action) => {  
-            state.status = 'succeeded';
-            state.items = action.payload;
-        })
-        .addCase(fetchProducts.rejected,(state, action) => {  
-            state.status = 'failed';
-            state.error = action.error.message;
-        });
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.items = action.payload;
+        state.filteredItems = action.payload; // show all initially
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
+  },
 });
 
+export const { setSearchTerm } = ProductsSlice.actions;
 export default ProductsSlice.reducer;

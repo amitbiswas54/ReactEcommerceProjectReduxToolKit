@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../reducers/ProductsSlice";
 import { addItem, removeItem } from "../reducers/slice";
+import SearchProducts from "./SearchProducts";
 
 function ProductCard() {
   const dispatch = useDispatch();
@@ -13,7 +14,11 @@ function ProductCard() {
 
    const cartSelector = useSelector((state) =>state.cart.item);
 
-  const productSelector = useSelector((state) => state.products.items);
+  // const productSelector = useSelector((state) => state.products.items);
+  const productSelector = useSelector(
+  (state) => state.products.filteredItems
+);
+
 
   return (
     <>
@@ -21,7 +26,12 @@ function ProductCard() {
         <h1 class="text-4xl font-bold pt-6 text-violet-900 text-center ">
         
           Redux toolkit small project
+
+
         </h1>
+
+      <SearchProducts/>
+
         <div className=" mt-10  mx-auto max-w-[75rem]"></div>
         <div className="w-full  mt-10 grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-6">
           {productSelector.length > 0 ? (
