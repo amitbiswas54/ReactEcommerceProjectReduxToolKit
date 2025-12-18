@@ -30,5 +30,9 @@ const addtoCart = createSlice({
 
   },
 });
+
+
+
+
 export const { addItem, removeItem, clearAllItem } = addtoCart.actions;
 export default addtoCart.reducer;

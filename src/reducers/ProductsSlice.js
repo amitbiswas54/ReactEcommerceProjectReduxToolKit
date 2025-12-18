@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+import { Search } from "lucide-react";
 
 export const fetchProducts = createAsyncThunk(
   'products',
@@ -16,19 +17,25 @@ const ProductsSlice = createSlice({
 
     items: [],
     status: undefined,
-    error: null,    
+    error: null, 
+    //searchTerm: "",  ✅ search text   
     },
-    // reducers: {},
+       
+    // reducers: {
+    //   setSearchTerm:(state, action) => {
+    //   state.searchTerm = action.payload;
+    // },
+    // },
     extraReducers: (builder) => {
       builder
-        .addCase(fetchProducts.pending, (state) => {    
+        .addCase(fetchProducts.pending,(state) => {    
             state.status = 'loading';
         })
-        .addCase(fetchProducts.fulfilled, (state, action) => {  
+        .addCase(fetchProducts.fulfilled,(state, action) => {  
             state.status = 'succeeded';
             state.items = action.payload;
         })
-        .addCase(fetchProducts.rejected, (state, action) => {  
+        .addCase(fetchProducts.rejected,(state, action) => {  
             state.status = 'failed';
             state.error = action.error.message;
         });

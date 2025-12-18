@@ -19,8 +19,8 @@ function ProductCard() {
     <>
       <div className="container mx-auto">
         <h1 class="text-4xl font-bold pt-6 text-violet-900 text-center ">
-          {" "}
-          Gradient Text Example{" "}
+        
+          Redux toolkit small project
         </h1>
         <div className=" mt-10  mx-auto max-w-[75rem]"></div>
         <div className="w-full  mt-10 grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-6">
