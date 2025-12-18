@@ -17,13 +17,21 @@ const ProductsSlice = createSlice({
     error: null,
     searchTerm: "",
   },
-  reducers: {
+ reducers: {
     setSearchTerm: (state, action) => {
       state.searchTerm = action.payload;
 
-      state.filteredItems = state.items.filter((item) =>
-        item.title.toLowerCase().includes(action.payload.toLowerCase())
+      const term = action.payload.toLowerCase();
+
+      state.filteredItems = state.items.filter(
+        (item) =>
+          item.title.toLowerCase().includes(term) ||
+          item.category.toLowerCase().includes(term)
       );
+    },
+    clearSearch: (state) => {
+      state.searchTerm = "";
+      state.filteredItems = state.items;
     },
   },
   extraReducers: (builder) => {
@@ -43,5 +51,5 @@ const ProductsSlice = createSlice({
   },
 });
 
-export const { setSearchTerm } = ProductsSlice.actions;
+export const { setSearchTerm, clearSearch } = ProductsSlice.actions;
 export default ProductsSlice.reducer;
