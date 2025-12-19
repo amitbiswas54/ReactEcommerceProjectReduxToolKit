@@ -12,14 +12,15 @@ function AddtoCart() {
 
   return (
    <> <Link to='/cartlist'>
-   <div className="relative flex gap-2 cursor-pointer bg-purple-600 text-white py-2 px-4 
-                rounded-lg hover:bg-purple-700 transition-all">
-      <ShoppingCart className="w-7 h-7 group text-white hover:text-purple-600" />
+   <div className="relative flex gap-2 cursor-pointer bg-gray-950 text-white py-2 px-4 
+                rounded-lg hover:bg-gray-900 transition-all">
+      <ShoppingCart className="w-7 h-7 group text-white hover:text-sky-900" />
         {/* Cart Counter */}
         Cart Item
           <span className="
           absolute -top-2 -right-2
-           bg-red-500 text-white 
+           bg-white text-sky-900 
+           font-bold
            text-xs w-5 h-5 flex items-center 
            justify-center group-hover:bg-white rounded-full ">
                {cartSelector.length? cartSelector.length:0}

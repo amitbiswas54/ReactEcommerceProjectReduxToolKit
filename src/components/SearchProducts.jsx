@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSearchTerm, clearSearch } from "../reducers/ProductsSlice";
 import { useDebounce } from "../hooks/useDebounce";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function SearchProducts() {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ function SearchProducts() {
   }, [debouncedValue, dispatch]);
 
   return (
-    <div className="flex gap-4 bg-amber-700 items-center rounded-md py-3 px-4 text-white">
+    <div className="flex gap-4 bg-gray-900 items-center rounded-md py-3 px-4 text-white">
       <h2 className="font-bold text-xl">Search</h2>
 
       <div className="relative w-full">
@@ -23,7 +24,7 @@ function SearchProducts() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Search by title or category"
-          className="w-full p-2 pr-10 rounded-md bg-transparent border border-amber-300 focus:outline-none"
+          className="w-full p-2 pr-10 rounded-md bg-transparent border border-gray-300 focus:outline-none"
         />
 
         {input && (
@@ -38,6 +39,7 @@ function SearchProducts() {
           </button>
         )}
       </div>
+
     </div>
   );
 }

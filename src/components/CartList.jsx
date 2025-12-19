@@ -1,110 +1,152 @@
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { removeItem } from '../reducers/slice';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { clearAllItem } from '../reducers/slice';
+import React, { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { removeItem, clearAllItem } from '../reducers/slice'
+import { Link, useNavigate } from 'react-router-dom'
 
 function CartList() {
+  const cartSelector = useSelector((state) => state.cart.item)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const cartSelector = useSelector((state) =>state.cart.item);
-  console.log(cartSelector)
-  const dispatch = useDispatch();
+  const [cartItem, setCartItem] = useState(cartSelector)
 
-  const [cartItem, setCartItem] = useState(cartSelector);
+  useEffect(() => {
+    setCartItem(cartSelector)
+  }, [cartSelector])
 
-  // useEffect(()=>{
-  //   setCartItem()
-  // },[])
-
-  const handleQuantityChange = (itemId, quantity=1) => {
-    // Implement quantity change logic here
-      let qty = parseInt(quantity) > 0 ? parseInt(quantity) : 1;
-      let cartTempItems = cartItem.map((item) => {
-        if (item.id === itemId) {
-          return { ...item, quantity: qty };
-        }
-        return item;
-      });
-      setCartItem(cartTempItems);
+  const handleQuantityChange = (itemId, quantity = 1) => {
+    let qty = parseInt(quantity) > 0 ? parseInt(quantity) : 1
+    let cartTempItems = cartItem.map((item) =>
+      item.id === itemId ? { ...item, quantity: qty } : item
+    )
+    setCartItem(cartTempItems)
   }
 
-  const navigat = useNavigate()
-
-  const placeOrder =()=>{
-   
+  const placeOrder = () => {
     localStorage.clear()
     dispatch(clearAllItem())
-    navigat('/')
+    navigate('/')
   }
 
-  useEffect(()=>{
-    setCartItem(cartSelector)
-  },[cartSelector])
-
   return (
-   <>
-   <div className="border-b-2 border-amber-950 p-4 m-4 ">
-    <div className="flex justify-between items-center">
-   <h2 className='text-2xl font-bold text-purple-600'>Cart List</h2>
-     <h2 className='text-xl font-bold text-purple-900'>Total Item {cartItem ? cartItem.length:0 }</h2>
-     </div>
-   </div>
+    <div className="container mx-auto px-4 py-6">
+      
+      {/* Header */}
+      <div className="border-b pb-4 mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+        <h2 className="text-2xl font-bold text-sky-800">Cart List</h2>
+        <p className="text-lg font-semibold text-gray-800">
+          Total Items: {cartItem?.length || 0}
+        </p>
+      </div>
 
-    <div>
+      {/* Cart Items */}
       {cartItem && cartItem.length > 0 ? (
-        cartItem.map((item) => (
-          <div key={item.id} className="border-b-2 flex  justify-between items-center  border-gray-300  p-4 m-4 ">
-            <div className="flex flex-8 items-center gap-4">
-              <img
-                src={item.image}  
-                alt={item.title}
+        <div className="space-y-6">
+          {cartItem.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white rounded-xl shadow-md p-4 
+                         flex flex-col lg:flex-row gap-4 lg:items-center"
+            >
+              {/* Image */}
+              <div className="flex justify-center lg:w-40">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-32 h-32 object-contain"
+                />
+              </div>
 
-                className="w-40 h-40 object-contain"
-              />
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900">  
+              {/* Details */}
+              <div className="flex-1">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1">
                   {item.title}
                 </h3>
-                <p>{item.description}</p>
-             
-                <button onClick={()=>dispatch(removeItem(item))}
-                className='bg-red-700 hover:bg-red-900 cursor-pointer text-white px-2 py-1 rounded-sm mt-3'
-                >Remove Item</button>
-              </div>    
-               
-            </div>
-       <div className='flex flex-2 gap-2  justify-end'>
-        <p>Quantaty</p>
-      <input type="number" placeholder='1'   min="1"
-      onChange={(e)=>handleQuantityChange(item.id, e.target.value)} />
-    </div>
-        <div className='flex-2'>
-   <p className="text-purple-600 text-3xl font-bold text-end">$ {(item.quantity?item.price*item.quantity : item.price).toFixed(2) }</p>
-            </div>
-          </div>
-        ))
-      ) : (
-        <p className="text-center text-red-700 font-bold text-2xl">Your cart is empty.</p>
-      )}
-        
-    </div>
+                <p className="text-gray-600 text-sm line-clamp-2">
+                  {item.description}
+                </p>
 
-    <div className='flex justify-between px-4'>
-      <div>
-        <button onClick={()=>placeOrder()}
-          className='cursor-pointer bg-purple-600 text-white py-2 px-4 
-                rounded-lg hover:bg-purple-700 transition-all'
-          >Place Order</button>
-      </div>
-    <div>
-    <h2 className='text-2xl font-bold text-gray-900 text-end m-4'>
-      Total Price: $ {cartItem.reduce((total, item) => item.quantity? total + item.quantity*item.price: total+item.price , 0).toFixed(2)}</h2>
+                <button
+                  onClick={() => dispatch(removeItem(item))}
+                  className="mt-3 inline-block bg-red-600 hover:bg-red-700
+                             text-white px-3 py-1 rounded-md text-sm"
+                >
+                  Remove Item
+                </button>
+              </div>
+
+              {/* Quantity */}
+              <div className="flex items-center justify-between lg:flex-col lg:items-start gap-2">
+                <label className="text-sm font-semibold">Quantity</label>
+                <input
+                  type="number"
+                  min="1"
+                  defaultValue={item.quantity || 1}
+                  onChange={(e) =>
+                    handleQuantityChange(item.id, e.target.value)
+                  }
+                  className="w-20 border rounded-md px-2 py-1"
+                />
+              </div>
+
+              {/* Price */}
+              <div className="text-right lg:w-32">
+                <p className="text-2xl font-bold text-sky-900">
+                  $
+                  {(
+                    item.quantity
+                      ? item.price * item.quantity
+                      : item.price
+                  ).toFixed(2)}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-red-700 font-bold text-2xl mt-10">
+          Your cart is empty.
+        </p>
+      )}
+
+      {/* Footer */}
+      {cartItem.length > 0 && (
+        <div className="mt-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+          
+          <div className="flex gap-3">
+            <button
+              onClick={placeOrder}
+              className="bg-sky-900 hover:bg-sky-800 text-white
+                         px-5 py-2 rounded-lg transition"
+            >
+              Place Order
+            </button>
+
+            <Link
+              to="/"
+              className="bg-gray-900 hover:bg-gray-800 text-white
+                         px-5 py-2 rounded-lg transition"
+            >
+              Products
+            </Link>
+          </div>
+
+          <h2 className="text-2xl font-bold text-gray-900">
+            Total: $
+            {cartItem
+              .reduce(
+                (total, item) =>
+                  item.quantity
+                    ? total + item.quantity * item.price
+                    : total + item.price,
+                0
+              )
+              .toFixed(2)}
+          </h2>
+        </div>
+      )}
     </div>
-</div>
-   </>
   )
 }
 
-export default CartList;
+export default CartList
