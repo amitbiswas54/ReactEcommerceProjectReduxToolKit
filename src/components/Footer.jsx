@@ -9,7 +9,7 @@ function Footer() {
            <h2>Amit Biswas <span>Fontend Developer</span></h2>
         <p></p> 
        
-          <p>Mobile : +91 9007097330 | email id:amit.biswas54@gmail.com</p>
+          <p>Mobile : +91 9007097330 | email id : amit.biswas54@gmail.com</p>
        
         
         

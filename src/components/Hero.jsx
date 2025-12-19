@@ -3,10 +3,10 @@ import React from 'react'
 function Hero() {
   return (
     <>
-<div className="w-full bg-sky-300 py-16 px-4 sm:px-6 lg:px-8 my-7 rounded-lg">
+<div className="w-full bg-sky-300 py-5 px-4 sm:px-6 lg:px-8 my-7 rounded-lg">
   <div className=" mx-auto text-center">
     
-    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
       About This Project
     </h2>
 
